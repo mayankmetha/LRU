@@ -16,19 +16,29 @@ public class LRUList {
 		Capacity=capacity;
 	}
 	
-	Node addPage(String data) {
+	void addPage(String data) {
 		Node toAdd = new Node(data);
 		(head.next).prev = toAdd;
 		toAdd.next = head.next;
 		head.next = toAdd;
 		toAdd.prev = head;
-		return head;
 	}
 	
-	Node delPage() {
+	void delPage() {
 		tail.prev = tail.prev.prev;
 		tail.prev.next = tail;
-		return head;
+	}
+	
+	void repos(int nodePos) {
+		Node temp = head.next;
+		for(int i=1;i<=nodePos;i++) {
+			temp = temp.next;
+			if(temp==tail) break;
+		}
+		head.next.prev = temp;
+		temp.next = head.next;
+		temp.prev = head;
+		head.next = temp;
 	}
 	
 	void Set(String value) {
@@ -36,9 +46,24 @@ public class LRUList {
 			addPage(value);
 			cnt++;
 		} else {
-			addPage(value);
-			delPage();
+			if(search(value)==0)
+			{	addPage(value);
+				delPage();
+			} else {
+				repos(search(value));
+			}
 		}
+	}
+	
+	int search(String value) {
+		Node temp = head;
+		int i=1;
+		for(temp=head.next;temp!=tail;temp=temp.next) {
+			if(temp.data==value)
+				return i;
+			i++;
+		}
+		return 0;
 	}
 	
 	void disp() {

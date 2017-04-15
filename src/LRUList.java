@@ -4,6 +4,7 @@ public class LRUList {
 	int cnt=0;
 	Node head;
 	Node tail;
+	//init list
 	LRUList() {
 		head = new Node("head");
 		tail = new Node("tail");
@@ -12,10 +13,11 @@ public class LRUList {
 		head.prev = tail;
 		tail.prev = head;
 	}
+	// set list capacity
 	void setCapacity(int capacity) {
 		Capacity=capacity;
 	}
-	
+	// add new node after head
 	void addPage(String data) {
 		Node toAdd = new Node(data);
 		(head.next).prev = toAdd;
@@ -23,12 +25,12 @@ public class LRUList {
 		head.next = toAdd;
 		toAdd.prev = head;
 	}
-	
+	//delete node just before tail
 	void delPage() {
 		tail.prev = tail.prev.prev;
 		tail.prev.next = tail;
 	}
-	
+	// reposition node
 	void repos(int nodePos) {
 		Node temp = head.next;
 		for(int i=1;i<=nodePos;i++) {
@@ -40,7 +42,7 @@ public class LRUList {
 		temp.prev = head;
 		head.next = temp;
 	}
-	
+	// LRU logic
 	void Set(String value) {
 		if(cnt<Capacity) {
 			addPage(value);
@@ -54,7 +56,7 @@ public class LRUList {
 			}
 		}
 	}
-	
+	// search a page
 	int search(String value) {
 		Node temp = head;
 		int i=1;
@@ -65,7 +67,7 @@ public class LRUList {
 		}
 		return 0;
 	}
-	
+	// display LRU
 	void disp() {
 		System.out.println("Content of LRU Stack:");
 		Node temp;
